@@ -1,4 +1,5 @@
 import tensorflow as tf
+import matplotlib.pyplot as plt
 from model import model
 
 BATCH_SIZE = 64
@@ -68,3 +69,28 @@ print(f"\nFInal Test Accuracy: {test_accuracy * 100:.2f}%")
 
 model.save("cifake_detector_model.keras")
 print("Model saved as 'cifake_detector_model.keras'")
+
+plt.figure(figsize=(12, 5))
+
+# --- LEFT PLOT: ACCURACY ---
+plt.subplot(1, 2, 1)
+plt.plot(history.history['accuracy'], label='Train Accuracy')
+plt.plot(history.history['val_accuracy'], label='Validation Accuracy')
+plt.title('Model Accuracy')
+plt.xlabel('Epoch')
+plt.ylabel('Accuracy')
+plt.legend(loc='lower right')
+
+# --- RIGHT PLOT: LOSS ---
+plt.subplot(1, 2, 2)
+plt.plot(history.history['loss'], label='Train Loss')
+plt.plot(history.history['val_loss'], label='Validation Loss')
+plt.title('Model Loss')
+plt.xlabel('Epoch')
+plt.ylabel('Loss')
+plt.legend(loc='upper right')
+
+# 3. Clean up the spacing and save/display the image
+plt.tight_layout()
+plt.savefig('training_performance.png')  # This saves the image to your project folder
+plt.show()
