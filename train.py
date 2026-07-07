@@ -7,8 +7,8 @@ IMG_HEIGHT = 32
 IMG_WIDTH = 32
 SEED = 10
 
-TRAIN_DATA_DIR = "/train"
-TEST_DATA_DIR = "/test"
+TRAIN_DATA_DIR = "cifake_dataset/train"
+TEST_DATA_DIR = "cifake_dataset/test"
 
 print("Loading training data...")
 train_ds = tf.keras.utils.image_dataset_from_directory(
@@ -65,15 +65,10 @@ history = model.fit(
 print("\nEvaluating model against unseen Test Set...")
 test_loss, test_accuracy = model.evaluate(test_ds)
 
-print(f"\nFInal Test Accuracy: {test_accuracy * 100:.2f}%")
+print(f"\nFinal Test Accuracy: {test_accuracy * 100:.2f}%")
 
 #model.save("cifake_detector_model.keras")
 #print("Model saved as 'cifake_detector_model.keras'")
-
-import matplotlib.pyplot as plt
-
-# 1. Make sure you capture the output of your training loop like this:
-# history = model.fit(train_data, validation_data=val_data, epochs=5)
 
 # 2. Create a figure container with a side-by-side layout (1 row, 2 columns)
 plt.figure(figsize=(12, 5))
