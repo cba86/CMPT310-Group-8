@@ -11,7 +11,7 @@ TRAIN_DATA_DIR = "/train"
 TEST_DATA_DIR = "/test"
 
 print("Loading training data...")
-train_ds = tf.keras.utils.image_dataseet_from_directory(
+train_ds = tf.keras.utils.image_dataset_from_directory(
     TRAIN_DATA_DIR,
     validation_split=0.2,
     subset="training",
@@ -22,7 +22,7 @@ train_ds = tf.keras.utils.image_dataseet_from_directory(
 )
 
 print("\nLoading validation data...")
-val_ds = tf.keras.utils.image_datset_from_directory(
+val_ds = tf.keras.utils.image_dataset_from_directory(
     TRAIN_DATA_DIR,
     validation_split=0.2,
     subset="validation",
@@ -46,7 +46,7 @@ val_ds = val_ds.cache().prefetch(buffer_size=AUTOTUNE)
 test_ds = test_ds.cache().prefetch(buffer_size=AUTOTUNE)
 
 model.compile(
-    optimizer=tf.keras.optimizersAdam(learning_rate=0.001),
+    optimizer=tf.keras.optimizers.Adam(learning_rate=0.001),
     loss='binary_crossentropy',
     metrics=['accuracy']
 )
@@ -67,9 +67,15 @@ test_loss, test_accuracy = model.evaluate(test_ds)
 
 print(f"\nFInal Test Accuracy: {test_accuracy * 100:.2f}%")
 
-model.save("cifake_detector_model.keras")
-print("Model saved as 'cifake_detector_model.keras'")
+#model.save("cifake_detector_model.keras")
+#print("Model saved as 'cifake_detector_model.keras'")
 
+import matplotlib.pyplot as plt
+
+# 1. Make sure you capture the output of your training loop like this:
+# history = model.fit(train_data, validation_data=val_data, epochs=5)
+
+# 2. Create a figure container with a side-by-side layout (1 row, 2 columns)
 plt.figure(figsize=(12, 5))
 
 # --- LEFT PLOT: ACCURACY ---
