@@ -6,8 +6,8 @@ IMG_HEIGHT = 32
 IMG_WIDTH = 32
 SEED = 10
 
-TRAIN_DATA_DIR = "cifake_dataset/train"
-TEST_DATA_DIR = "cifake_dataset/test"
+TRAIN_DATA_DIR = "/train"
+TEST_DATA_DIR = "/test"
 
 print("Loading training data...")
 train_ds = tf.keras.utils.image_dataseet_from_directory(
