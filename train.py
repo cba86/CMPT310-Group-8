@@ -67,8 +67,8 @@ test_loss, test_accuracy = model.evaluate(test_ds)
 
 print(f"\nFinal Test Accuracy: {test_accuracy * 100:.2f}%")
 
-#model.save("cifake_detector_model.keras")
-#print("Model saved as 'cifake_detector_model.keras'")
+model.save("my_model.keras")
+print("Model saved as 'my_model.keras'")
 
 import matplotlib.pyplot as plt
 
