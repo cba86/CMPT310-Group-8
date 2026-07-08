@@ -7,8 +7,8 @@ IMG_HEIGHT = 32
 IMG_WIDTH = 32
 SEED = 10
 
-TRAIN_DATA_DIR = "cifake_dataset/train"
-TEST_DATA_DIR = "cifake_dataset/test"
+TRAIN_DATA_DIR = "data/train"
+TEST_DATA_DIR = "data/test"
 
 print("Loading training data...")
 train_ds = tf.keras.utils.image_dataset_from_directory(
@@ -69,6 +69,8 @@ print(f"\nFinal Test Accuracy: {test_accuracy * 100:.2f}%")
 
 #model.save("cifake_detector_model.keras")
 #print("Model saved as 'cifake_detector_model.keras'")
+
+import matplotlib.pyplot as plt
 
 # 2. Create a figure container with a side-by-side layout (1 row, 2 columns)
 plt.figure(figsize=(12, 5))
