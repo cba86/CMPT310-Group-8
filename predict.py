@@ -25,8 +25,8 @@ def imageUploader():
         # re-sizing the app window in order to fit picture
         # and buttom
         app.geometry("560x300")
-        label.config(image=pic)
-        label.image = pic
+        imgLabel.config(image=pic)
+        imgLabel.image = pic
 
         img_for_model = img.resize((32, 32))
         img_array = tf.keras.utils.img_to_array(img_for_model)
@@ -39,8 +39,8 @@ def imageUploader():
         predict = "Real" if score > 0.5 else "Fake"
         confidence = score if score > 0.5 else 1 - score
 
-        label.config(text= "hi" )
-        print(f"Prediction: {predict} ({confidence:.2%} confidence)")
+        labels.config(text= f"Prediction: {predict} ({confidence:.2%} confidence)" )
+
         
 
     # if no file is selected, then we are displaying below message
@@ -59,17 +59,17 @@ app.geometry("560x270")
 
 # adding background image
 imgLabel = Label(app)
-imgLabel.place(x=0, y=0)
+imgLabel.pack(side = tk.TOP)
 
 
-label = tk.Label(app, text="Original Text", font=("Arial", 14))
+
+labels = tk.Label(app, text="Original Text", fg="Green", bg="white", font=("Arial", 14))
+labels.pack(side=tk.BOTTOM, pady=5)
 
 # adding background color to our upload button
 app.option_add("*Label*Background", "white")
 app.option_add("*Button*Background", "lightgreen")
 
-label = tk.Label(app)
-label.pack(pady=10)
 
 # defining our upload buttom
 uploadButton = tk.Button(app, text="Locate Image", command=imageUploader)
