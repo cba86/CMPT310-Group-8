@@ -1,13 +1,13 @@
 # Importing libraries
 import tkinter as tk
+import tensorflow as tf
 from tkinter import Label
 from tkinter import filedialog
 from PIL import Image, ImageTk
-import tensorflow as tf
 from model import model
 
 
-model = tf.keras.models.load_model("my_model.keras")
+model = tf.keras.models.load_model('my_model.keras')
 
 # image uploader function
 def imageUploader():
@@ -16,29 +16,32 @@ def imageUploader():
 
     # if file is selected
     if len(path):
-        img = Image.open(path)
-        img = img.resize((200, 200))
-        pic = ImageTk.PhotoImage(img)
+        img = Image.open(path).convert("RGB")
+
+        # --- Display version ---
+        img_display = img.resize((200, 200))
+        pic = ImageTk.PhotoImage(img_display)
 
         # re-sizing the app window in order to fit picture
         # and buttom
         app.geometry("560x300")
         label.config(image=pic)
         label.image = pic
-        model.predict(pic)
-        img_array = tf.keras.utils.img_to_array(img)
 
-        # Add batch dimension: (32, 32, 3) -> (1, 32, 32, 3)
+        img_for_model = img.resize((32, 32))
+        img_array = tf.keras.utils.img_to_array(img_for_model)
         img_array = tf.expand_dims(img_array, 0)
 
         # Predict
         prediction = model.predict(img_array)
         score = prediction[0][0]
 
-        label = "Fake" if score > 0.5 else "REAL"
+        predict = "Real" if score > 0.5 else "Fake"
         confidence = score if score > 0.5 else 1 - score
-        label.config(text = f"Prediction: {label} ({confidence:.2%} confidence)")
-        print(f"Prediction: {label} ({confidence:.2%} confidence)")  
+
+        label.config(text= "hi" )
+        print(f"Prediction: {predict} ({confidence:.2%} confidence)")
+        
 
     # if no file is selected, then we are displaying below message
     else:
@@ -58,6 +61,9 @@ app.geometry("560x270")
 imgLabel = Label(app)
 imgLabel.place(x=0, y=0)
 
+
+label = tk.Label(app, text="Original Text", font=("Arial", 14))
+
 # adding background color to our upload button
 app.option_add("*Label*Background", "white")
 app.option_add("*Button*Background", "lightgreen")
@@ -69,6 +75,5 @@ label.pack(pady=10)
 uploadButton = tk.Button(app, text="Locate Image", command=imageUploader)
 uploadButton.pack(side=tk.BOTTOM, pady=20)
 
-predictButton
 
 app.mainloop()
