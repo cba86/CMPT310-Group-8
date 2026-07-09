@@ -3,6 +3,11 @@ import tkinter as tk
 from tkinter import Label
 from tkinter import filedialog
 from PIL import Image, ImageTk
+import tensorflow as tf
+from model import model
+
+
+model = tf.keras.models.load_model("my_model.keras")
 
 # image uploader function
 def imageUploader():
@@ -20,10 +25,26 @@ def imageUploader():
         app.geometry("560x300")
         label.config(image=pic)
         label.image = pic
+        model.predict(pic)
+        img_array = tf.keras.utils.img_to_array(img)
+
+        # Add batch dimension: (32, 32, 3) -> (1, 32, 32, 3)
+        img_array = tf.expand_dims(img_array, 0)
+
+        # Predict
+        prediction = model.predict(img_array)
+        score = prediction[0][0]
+
+        label = "Fake" if score > 0.5 else "REAL"
+        confidence = score if score > 0.5 else 1 - score
+        label.config(text = f"Prediction: {label} ({confidence:.2%} confidence)")
+        print(f"Prediction: {label} ({confidence:.2%} confidence)")  
 
     # if no file is selected, then we are displaying below message
     else:
         print("No file is Choosen !! Please choose a file.")
+
+
 
 
 # defining tkinter object
@@ -47,5 +68,7 @@ label.pack(pady=10)
 # defining our upload buttom
 uploadButton = tk.Button(app, text="Locate Image", command=imageUploader)
 uploadButton.pack(side=tk.BOTTOM, pady=20)
+
+predictButton
 
 app.mainloop()
